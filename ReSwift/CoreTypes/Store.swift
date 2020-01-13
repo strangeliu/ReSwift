@@ -81,8 +81,8 @@ open class Store<State: StateType>: StoreType {
         return middleware
             .reversed()
             .reduce(
-                { [unowned self] action in
-                    self._defaultDispatch(action: action) },
+                { [weak self] action in
+                    self?._defaultDispatch(action: action) },
                 { dispatchFunction, middleware in
                     // If the store get's deinitialized before the middleware is complete; drop
                     // the action without dispatching.
